@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EA Matrix | Detailing Premium - Calidad que Marca la Diferencia</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> <!-- Iconos gratis -->
+</head>
+<body>
+    <header>
+        <nav class="nav-container">
+            <div class="logo">
+                <h1>EA Matrix</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#about">Sobre Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h2>Productos 3D • Cuidado & Detailing Premium</h2>
+                <p>Calidad que marca la diferencia. Envíos a todo el país.</p>
+                <a href="#productos" class="cta-button">Descubre Nuestros Productos</a>
+            </div>
+            <div class="hero-image">
+                <!-- Reemplaza con tu imagen hero de Instagram -->
+                <img src="https://via.placeholder.com/800x400/1a1a1a/ffffff?text=EA+Matrix+Hero" alt="Auto detallado premium">
+            </div>
+        </section>
+
+        <section id="productos" class="productos">
+            <h2>Nuestros Productos Premium</h2>
+            <div class="productos-grid" id="slider">
+                <!-- Productos de ejemplo; agrega más con JS -->
+                <div class="producto-card">
+                    <img src="https://via.placeholder.com/300x200/333/fff?text=Producto+3D" alt="Producto 1">
+                    <h3>Limpiador 3D Premium</h3>
+                    <p>Elimina suciedad profunda con brillo instantáneo.</p>
+                    <span class="precio">$25.000</span>
+                </div>
+                <div class="producto-card">
+                    <img src="https://via.placeholder.com/300x200/333/fff?text=Cera+Protector" alt="Producto 2">
+                    <h3>Cera Protector Avanzada</h3>
+                    <p>Protege tu auto por meses. Fácil aplicación.</p>
+                    <span class="precio">$35.000</span>
+                </div>
+                <div class="producto-card">
+                    <img src="https://via.placeholder.com/300x200/333/fff?text=Kit+Detailing" alt="Producto 3">
+                    <h3>Kit Detailing Completo</h3>
+                    <p>Todo lo esencial para un detailing profesional.</p>
+                    <span class="precio">$80.000</span>
+                </div>
+            </div>
+            <button class="slider-btn prev" onclick="cambiarSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-btn next" onclick="cambiarSlide(1)"><i class="fas fa-chevron-right"></i></button>
+        </section>
+
+        <section id="about" class="about">
+            <h2>Sobre EA Matrix</h2>
+            <p>Somos especialistas en suministros de detailing en Mar del Plata. Inspirados en la precisión y el brillo, ofrecemos productos premium que elevan el cuidado de tu vehículo. ¡Síguenos en Instagram para tips y novedades!</p>
+            <a href="https://www.instagram.com/ea.matrix/" target="_blank" class="instagram-link">
+                <i class="fab fa-instagram"></i> @ea.matrix
+            </a>
+        </section>
+
+        <section id="contacto" class="contacto">
+            <h2>Contacto</h2>
+            <form id="contact-form">
+                <input type="text" placeholder="Tu nombre" required>
+                <input type="email" placeholder="Tu email" required>
+                <textarea placeholder="Tu mensaje (ej: consulta de productos)" required></textarea>
+                <button type="submit">Enviar Mensaje</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 EA Matrix. Todos los derechos reservados. | Mar del Plata, Argentina</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
