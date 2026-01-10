@@ -2,18 +2,21 @@ const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
 if (hamburger && navMenu) {
+    console.log('Hamburger y navMenu encontrados → JS OK');
     hamburger.addEventListener('click', () => {
+        console.log('Click en hamburguesa detectado');
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
     });
 
-    // Cierra al clickear links
     document.querySelectorAll('.nav-menu a').forEach(link => {
         link.addEventListener('click', () => {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
         });
     });
+} else {
+    console.error('Hamburger o navMenu NO encontrados → revisa HTML');
 }
 // Header scrolled
 window.addEventListener('scroll', () => {
@@ -31,41 +34,75 @@ function showSlide(index) {
 document.querySelector('.prev').addEventListener('click', () => { slideIndex = (slideIndex - 1 + totalSlides) % totalSlides; showSlide(slideIndex); });
 document.querySelector('.next').addEventListener('click', () => { slideIndex = (slideIndex + 1) % totalSlides; showSlide(slideIndex); });
 
-// Carrito
+// Carrito global
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+// Función única que actualiza TODO
 function updateCart() {
-    document.getElementById('cart-count').textContent = cart.length;
+    // Actualiza badge (siempre visible, oculta si 0)
+    const countElement = document.getElementById('cart-count');
+    if (countElement) {
+        const count = cart.length;
+        countElement.textContent = count;
+        countElement.style.display = count > 0 ? 'flex' : 'none';
+    }
+
+    // Actualiza lista en modal
     const itemsList = document.getElementById('cart-items');
-    itemsList.innerHTML = cart.map(item => `<li>${item.name} - $${item.price}</li>`).join('');
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
-    document.getElementById('cart-total').textContent = total;
+    if (itemsList) {
+        itemsList.innerHTML = cart.map(item => `
+            <li>
+                ${item.name} - $${item.price}
+                <button class="remove-item" data-id="${item.id}">X</button>
+            </li>
+        `).join('');
+    }
+
+    // Calcula y muestra total
+    const totalElement = document.getElementById('cart-total');
+    if (totalElement) {
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+        totalElement.textContent = total.toLocaleString(); // formato bonito ARS
+    }
+
+    // Guarda en localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
 }
+
+// Evento agregar al carrito
 document.querySelectorAll('.add-to-cart').forEach(btn => {
     btn.addEventListener('click', () => {
-        const card = btn.parentElement;
-        cart.push({
-            id: card.dataset.id,
-            name: card.dataset.name,
-            price: parseInt(card.dataset.price)
-        });
+        const card = btn.closest('.producto-card'); // mejor que parentElement
+        if (!card) return;
+
+        const id = card.dataset.id;
+        const name = card.dataset.name;
+        const price = parseInt(card.dataset.price);
+
+        // Verifica si ya existe (evita duplicados)
+        const existing = cart.find(item => item.id === id);
+        if (existing) {
+            alert('Este producto ya está en el carrito');
+            return;
+        }
+
+        cart.push({ id, name, price });
         updateCart();
         alert('¡Agregado al carrito!');
     });
 });
-updateCart();
 
-function updateCartBadge() {
-    const countElement = document.getElementById('cart-count');
-    const count = cart.length; // 'cart' es tu array de productos
-    countElement.textContent = count;
-    if (count > 0) {
-        countElement.style.display = 'flex';
-    } else {
-        countElement.style.display = 'none';
+// Evento remover item (opcional pero útil)
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('remove-item')) {
+        const id = e.target.dataset.id;
+        cart = cart.filter(item => item.id !== id);
+        updateCart();
     }
-}
+});
 
+// Cargar al inicio
+updateCart(); // ← Esto es clave, llama al cargar la página
 
 // Modal carrito - versión mejorada
 const modal = document.getElementById('cart-modal');

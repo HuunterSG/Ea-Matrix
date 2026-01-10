@@ -46,9 +46,15 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1.4rem 0;
+    flex-wrap: wrap; /* por si acaso en mobile */
 }
 
 /* Logo con rojo neón */
+.logo {
+    flex: 0 0 auto;
+    text-align: left;
+}
+
 .logo h1 {
     font-family: 'Orbitron', sans-serif;
     font-size: 2.8rem;
@@ -70,9 +76,9 @@ body {
 
 /* Menú desktop */
 .nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 3rem;
+    flex: 1;
+    justify-content: center; /* centra los links en desktop */
+    text-align: center;
 }
 
 .nav-link {
@@ -101,8 +107,8 @@ body {
 
 /* Carrito siempre visible */
 .cart-icon {
-    position: relative;
-    margin-left: 2rem;
+    flex: 0 0 auto;
+    margin-left: auto; /* siempre a la derecha */
 }
 
 .cart-icon a {
@@ -276,10 +282,26 @@ h2 {
 
 /* ==================== MEDIA QUERIES MOBILE (TODO FUNCIONA) ==================== */
 @media (max-width: 768px) {
-    .hamburger { display: flex !important; }
-
+    .navbar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo {
+        order: 1;
+    }
+    .hamburger {
+        order: 3;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    .cart-icon {
+        order: 2;
+        margin-left: 1rem;
+    }
     .nav-menu {
-        position: fixed;
+        position: fixed !important;
         top: 0;
         right: -100%;
         width: 85%;
@@ -289,7 +311,10 @@ h2 {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        transition: right 0.5s ease;
+        position: fixed !important;
+        inset: 0 0 0 auto !important;
+        transform: translateX(100%) !important;
+        transition: transform 0.45s ease !important;
         z-index: 999;
         padding: 5rem 2rem;
         display: none !important;
@@ -297,6 +322,8 @@ h2 {
 
     .nav-menu.active {
         right: 0;
+        transform: translateX(0) !important;
+        visibility: visible !important;
         display: flex !important;
     }
 
