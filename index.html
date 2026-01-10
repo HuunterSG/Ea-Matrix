@@ -3,93 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EA Matrix: Productos premium 3D para detailing y cuidado de autos. Calidad que marca la diferencia. Envíos a todo Argentina.">
+    <meta property="og:title" content="EA Matrix | Detailing Premium">
+    <meta property="og:description" content="Suministros de alta calidad para el cuidado de tu vehículo. Mar del Plata, Argentina.">
+    <meta property="og:image" content="https://tu-imagen-hero.jpg">
     <title>EA Matrix | Detailing Premium - Calidad que Marca la Diferencia</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> <!-- Iconos gratis -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- EmailJS para formulario -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
-    <header>
-        <nav class="nav-container">
+
+    <!-- Header premium con sticky y shadow -->
+    <header class="header">
+        <nav class="navbar container">
             <div class="logo">
-                <h1>EA Matrix</h1>
+                <h1>EA <span>Matrix</span></h1>
             </div>
             <ul class="nav-menu">
-                <li><a href="#home">Inicio</a></li>
-                <li><a href="#productos">Productos</a></li>
-                <li><a href="#about">Sobre Nosotros</a></li>
-                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#home" class="nav-link">Inicio</a></li>
+                <li><a href="#productos" class="nav-link">Productos</a></li>
+                <li><a href="#best-sellers" class="nav-link">Best Sellers</a></li>
+                <li><a href="#about" class="nav-link">Nosotros</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+                <li class="cart-icon">
+                    <a href="#cart"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
+                </li>
             </ul>
             <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
             </div>
         </nav>
     </header>
 
-    <main>
-        <section id="home" class="hero">
-            <div class="hero-content">
-                <h2>Productos 3D • Cuidado & Detailing Premium</h2>
-                <p>Calidad que marca la diferencia. Envíos a todo el país.</p>
-                <a href="#productos" class="cta-button">Descubre Nuestros Productos</a>
+    <!-- Hero con video background y parallax effect -->
+    <section id="home" class="hero">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="https://your-video-url.mp4" type="video/mp4"> <!-- Reemplaza con video de auto brillante -->
+            Tu navegador no soporta video.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content container">
+            <h1>Calidad que <span>Marca la Diferencia</span></h1>
+            <p>Productos 3D premium para detailing y cuidado automotriz. Envíos nacionales desde Mar del Plata.</p>
+            <div class="hero-buttons">
+                <a href="#productos" class="btn-primary">Explorar Productos</a>
+                <a href="https://wa.me/+54XXXXXXXXXX?text=Hola%20EA%20Matrix,%20quiero%20consultar%20sobre..." target="_blank" class="btn-secondary">
+                    <i class="fab fa-whatsapp"></i> Consultar Ahora
+                </a>
             </div>
-            <div class="hero-image">
-                <!-- Reemplaza con tu imagen hero de Instagram -->
-                <img src="https://via.placeholder.com/800x400/1a1a1a/ffffff?text=EA+Matrix+Hero" alt="Auto detallado premium">
+            <div class="trust-badges">
+                <span><i class="fas fa-shield-alt"></i> Calidad Premium</span>
+                <span><i class="fas fa-truck"></i> Envíos a Todo Argentina</span>
+                <span><i class="fas fa-star"></i> 5 Estrellas en Instagram</span>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="productos" class="productos">
-            <h2>Nuestros Productos Premium</h2>
-            <div class="productos-grid" id="slider">
-                <!-- Productos de ejemplo; agrega más con JS -->
-                <div class="producto-card">
-                    <img src="https://via.placeholder.com/300x200/333/fff?text=Producto+3D" alt="Producto 1">
-                    <h3>Limpiador 3D Premium</h3>
-                    <p>Elimina suciedad profunda con brillo instantáneo.</p>
-                    <span class="precio">$25.000</span>
-                </div>
-                <div class="producto-card">
-                    <img src="https://via.placeholder.com/300x200/333/fff?text=Cera+Protector" alt="Producto 2">
-                    <h3>Cera Protector Avanzada</h3>
-                    <p>Protege tu auto por meses. Fácil aplicación.</p>
-                    <span class="precio">$35.000</span>
-                </div>
-                <div class="producto-card">
-                    <img src="https://via.placeholder.com/300x200/333/fff?text=Kit+Detailing" alt="Producto 3">
-                    <h3>Kit Detailing Completo</h3>
-                    <p>Todo lo esencial para un detailing profesional.</p>
-                    <span class="precio">$80.000</span>
-                </div>
+    <!-- Sección Best Sellers (inspirado en top sites) -->
+    <section id="best-sellers" class="section container">
+        <h2>Best Sellers</h2>
+        <div class="productos-grid">
+            <!-- Agrega cards como en productos, con data-price y btn add-to-cart -->
+            <div class="producto-card" data-id="1" data-name="Limpiador 3D Premium" data-price="25000">
+                <img src="https://via.placeholder.com/400x300?text=Best+Seller+1" alt="Limpiador 3D">
+                <h3>Limpiador 3D Premium</h3>
+                <p>Brillo instantáneo y protección duradera.</p>
+                <span class="precio">$25.000</span>
+                <button class="add-to-cart btn-primary">Agregar al Carrito</button>
             </div>
-            <button class="slider-btn prev" onclick="cambiarSlide(-1)"><i class="fas fa-chevron-left"></i></button>
-            <button class="slider-btn next" onclick="cambiarSlide(1)"><i class="fas fa-chevron-right"></i></button>
-        </section>
+            <!-- Agrega más (2-4) -->
+        </div>
+    </section>
 
-        <section id="about" class="about">
-            <h2>Sobre EA Matrix</h2>
-            <p>Somos distribuidores oficiales de 3D, especialistas en suministros de detailing en Mar del Plata. Inspirados en la precisión y el brillo, ofrecemos productos premium que elevan el cuidado de tu vehículo. ¡Síguenos en Instagram para tips y novedades!</p>
-            <a href="https://www.instagram.com/ea.matrix/" target="_blank" class="instagram-link">
-                <i class="fab fa-instagram"></i> @ea.matrix
-            </a>
-        </section>
+    <!-- Productos con slider touch-enabled -->
+    <section id="productos" class="section container">
+        <h2>Nuestros Productos Premium</h2>
+        <div class="productos-slider">
+            <!-- Cards similares, con add-to-cart -->
+            <div class="producto-card" data-id="2" data-name="Cera Avanzada" data-price="35000">
+                <img src="https://via.placeholder.com/400x300?text=Producto+2" alt="Cera">
+                <h3>Cera Protector Avanzada</h3>
+                <p>Protección por meses.</p>
+                <span class="precio">$35.000</span>
+                <button class="add-to-cart btn-primary">Agregar al Carrito</button>
+            </div>
+            <!-- Más cards, repite para 6-8 productos -->
+        </div>
+        <button class="slider-btn prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="slider-btn next"><i class="fas fa-chevron-right"></i></button>
+    </section>
 
-        <section id="contacto" class="contacto">
-            <h2>Contacto</h2>
-            <form id="contact-form">
-                <input type="text" placeholder="Tu nombre" required>
+    <!-- About con Instagram embed -->
+    <section id="about" class="section container">
+        <h2>Sobre EA Matrix</h2>
+        <p>Especialistas en detailing premium en Mar del Plata. Síguenos para tips y novedades.</p>
+        <!-- Embed Instagram feed (usa widget de Instagram o lightwidget.com) -->
+        <iframe src="https://www.instagram.com/p/YourPostID/embed" width="320" height="400" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+    </section>
+
+    <!-- Contacto con formulario funcional -->
+    <section id="contacto" class="section container">
+        <h2>Contacto</h2>
+        <form id="contact-form">
+            <input type="text" id="name" placeholder="Tu nombre" required>
+            <input type="email" id="email" placeholder="Tu email" required>
+            <textarea id="message" placeholder="Tu mensaje" required></textarea>
+            <button type="submit" class="btn-primary">Enviar</button>
+        </form>
+    </section>
+
+    <!-- Carrito modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Tu Carrito</h2>
+            <ul id="cart-items"></ul>
+            <p>Total: <span id="cart-total">0</span></p>
+            <a href="https://wa.me/+54XXXXXXXXXX?text=Mi%20pedido:..." target="_blank" class="btn-primary">Finalizar Compra vía WhatsApp</a>
+        </div>
+    </div>
+
+    <!-- Newsletter popup (aparece después de 5s) -->
+    <div id="newsletter-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-popup">&times;</span>
+            <h3>¡Suscríbete para Ofertas Exclusivas!</h3>
+            <form id="newsletter-form">
                 <input type="email" placeholder="Tu email" required>
-                <textarea placeholder="Tu mensaje (ej: consulta de productos)" required></textarea>
-                <button type="submit">Enviar Mensaje</button>
+                <button type="submit">Suscribirme</button>
             </form>
-        </section>
-    </main>
+        </div>
+    </div>
 
-    <footer>
-        <p>&copy; 2025 EA Matrix. Todos los derechos reservados. | Mar del Plata, Argentina</p>
+    <footer class="footer container">
+        <p>&copy; 2026 EA Matrix. Mar del Plata, Argentina. <a href="https://www.instagram.com/ea.matrix/" target="_blank"><i class="fab fa-instagram"></i> @ea.matrix</a></p>
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        emailjs.init("TU_USER_ID_DE_EMAILJS"); // Reemplaza
+    </script>
 </body>
 </html>
