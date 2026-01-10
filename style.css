@@ -99,11 +99,20 @@ body { font-family: 'Roboto', sans-serif; background: #000; color: #e0e0e0; line
 }
 
 .hero h1 {
-    font-size: clamp(3rem, 8vw, 6rem);
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);  /* responsive y grande */
     margin-bottom: 1.5rem;
-    background: linear-gradient(90deg, #fff, var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    
+    /* Gradiente + texto transparente (orden IMPORTANTE) */
+    background: linear-gradient(90deg, #ffffff, var(--accent));  /* estándar */
+    background-clip: text;                           /* estándar */
+    -webkit-background-clip: text;                   /* prefijo WebKit */
+    
+    -webkit-text-fill-color: transparent;            /* relleno transparente para WebKit */
+    color: transparent;                              /* fallback + estándar */
+    
+    text-shadow: 0 0 30px var(--glow);               /* glow rojo */
+    animation: glowRed 3s infinite alternate;        /* animación sutil */
 }
 
 /* Productos (centrado) */
@@ -120,4 +129,9 @@ body { font-family: 'Roboto', sans-serif; background: #000; color: #e0e0e0; line
     max-width: 500px;
     padding: 2rem;
     margin: 5% auto;
+}
+
+@keyframes glowRed {
+    from { text-shadow: 0 0 20px var(--glow); }
+    to   { text-shadow: 0 0 40px var(--glow), 0 0 60px var(--accent-dark); }
 }
