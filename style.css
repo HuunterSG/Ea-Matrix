@@ -150,28 +150,27 @@ h2 { font-family: 'Orbitron', sans-serif; font-size: 3rem; margin-bottom: 3rem; 
 
 /* Modal Carrito */
 .modal {
-    display: none;                  /* oculto por default */
+    display: none;
     position: fixed;
-    z-index: 2000;                  /* muy alto para estar sobre todo */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);   /* overlay oscuro */
-    overflow: auto;                 /* scroll si contenido excede */
+    inset: 0;                   /* top:0 right:0 bottom:0 left:0 */
+    background: rgba(0,0,0,0.85);
+    z-index: 2000;              /* alto para estar sobre todo */
+    align-items: center;
+    justify-content: center;
+    overflow: auto;             /* scroll si contenido largo */
 }
 
 .modal-content {
     background: #111;
-    margin: 10% auto;               /* centrado vertical con margen */
-    padding: 2.5rem;
-    border: 1px solid #00d0ff;
-    width: 90%;                     /* responsive */
-    max-width: 500px;               /* no más ancho que esto */
+    margin: 1rem;
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;           /* no se expande demasiado en desktop */
     border-radius: 12px;
-    max-height: 85vh;               /* evita que se pase de la pantalla */
-    overflow-y: auto;               /* scroll interno si hay muchos items */
+    position: relative;
     box-shadow: 0 15px 40px rgba(0,208,255,0.3);
+    max-height: 90vh;           /* evita que salga de pantalla */
+    overflow-y: auto;           /* scroll interno */
 }
 
 /* Items del carrito con espacio */
@@ -186,7 +185,8 @@ h2 { font-family: 'Orbitron', sans-serif; font-size: 3rem; margin-bottom: 3rem; 
     border-bottom: 1px solid #333;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    gap: 1rem;              /* espacio entre nombre y precio */
+    flex-wrap: wrap;        /* evita desborde en mobile */
 }
 
 /* Close button */
@@ -237,6 +237,13 @@ h2 { font-family: 'Orbitron', sans-serif; font-size: 3rem; margin-bottom: 3rem; 
     .modal-content {
         margin: 5% auto;
         padding: 1.5rem;
+        width: 95%;
+    }
+}
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 1.5rem;
+        margin: 0.5rem;
         width: 95%;
     }
 }
