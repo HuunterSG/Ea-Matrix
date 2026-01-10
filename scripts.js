@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Menú hamburguesa
+    // Menú hamburguesa con animación suave y cierre inteligente
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
 
@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
             navMenu.classList.toggle('active');
         });
 
+        // Cierra menú al clickear links o fuera
         navMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Carrito
+    // Carrito avanzado con animaciones y persistencia
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     function updateCart() {
@@ -26,7 +27,27 @@ document.addEventListener('DOMContentLoaded', () => {
             const count = cart.length;
             countEl.textContent = count;
             countEl.style.display = count > 0 ? 'flex' : 'none';
+            if (count > 0) countEl.classList.add('pulse');
+            setTimeout(() => countEl.classList.remove('pulse'), 600);
         }
+
+        const itemsList = document.getElementById('cart-items');
+        if (itemsList) {
+            itemsList.innerHTML = cart.map(item => `
+                <li class="cart-item">
+                    <span>${item.name}</span>
+                    <span>$${item.price.toLocaleString()}</span>
+                    <button class="remove-item" data-id="${item.id}">×</button>
+                </li>
+            `).join('');
+        }
+
+        const totalEl = document.getElementById('cart-total');
+        if (totalEl) {
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            totalEl.textContent = total.toLocaleString();
+        }
+
         localStorage.setItem('cart', JSON.stringify(cart));
     }
 
@@ -39,15 +60,32 @@ document.addEventListener('DOMContentLoaded', () => {
             const name = card.dataset.name || card.querySelector('h3')?.textContent.trim();
             const price = parseInt(card.dataset.price) || 0;
 
+            if (!id || !name || !price) return;
+
+            if (cart.some(item => item.id === id)) {
+                alert('Este producto ya está en tu carrito');
+                return;
+            }
+
             cart.push({ id, name, price });
             updateCart();
-            alert('¡Agregado!');
+            btn.style.transform = 'scale(0.95)';
+            setTimeout(() => btn.style.transform = 'scale(1)', 100);
+            alert('¡Producto agregado!');
         });
+    });
+
+    document.addEventListener('click', e => {
+        if (e.target.classList.contains('remove-item')) {
+            const id = e.target.dataset.id;
+            cart = cart.filter(item => item.id !== id);
+            updateCart();
+        }
     });
 
     updateCart();
 
-    // Modal
+    // Modal carrito con fade
     const modal = document.getElementById('cart-modal');
     const cartToggle = document.getElementById('cart-toggle');
     const closeBtn = document.querySelector('.close');
@@ -55,46 +93,61 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cartToggle && modal) {
         cartToggle.addEventListener('click', e => {
             e.preventDefault();
-            modal.style.display = 'block';
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
         });
     }
 
     if (closeBtn) {
-        closeBtn.addEventListener('click', () => modal.style.display = 'none');
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }, 400);
+        });
     }
 
     window.addEventListener('click', e => {
-        if (e.target === modal) modal.style.display = 'none';
-    });
-    // ==================== HEADER SCROLLED ====================
-    window.addEventListener('scroll', () => {
-        document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 50);
-    });
-    // Formulario contacto con EmailJS
-    document.getElementById('contact-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        emailjs.send('TU_SERVICE_ID', 'TU_TEMPLATE_ID', {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            message: document.getElementById('message').value
-        }).then(() => alert('¡Mensaje enviado! Te contactaremos pronto.'), () => alert('Error al enviar.'));
-        e.target.reset();
+        if (e.target === modal) {
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }, 400);
+        }
     });
 
-    // Popup newsletter (aparece después de 5s)
-    setTimeout(() => document.getElementById('newsletter-popup').style.display = 'block', 5000);
-    document.querySelector('.close-popup').addEventListener('click', () => document.getElementById('newsletter-popup').style.display = 'none');
-    document.getElementById('newsletter-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('¡Suscrito! Recibirás ofertas exclusivas.');
-        document.getElementById('newsletter-popup').style.display = 'none';
+    // Newsletter popup con fade
+    const popup = document.getElementById('newsletter-popup');
+    if (popup) {
+        setTimeout(() => {
+            popup.style.display = 'flex';
+            setTimeout(() => popup.classList.add('active'), 50);
+        }, 5000);
+    }
+
+    document.querySelector('.close-popup')?.addEventListener('click', () => {
+        popup.classList.remove('active');
+        setTimeout(() => popup.style.display = 'none', 400);
     });
 
-    // Smooth scroll
+    document.getElementById('newsletter-form')?.addEventListener('submit', e => {
+        e.preventDefault();
+        alert('¡Suscrito con éxito!');
+        popup.classList.remove('active');
+        setTimeout(() => popup.style.display = 'none', 400);
+    });
+
+    // Smooth scroll elegante
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', (e) => {
+        anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            document.querySelector(anchor.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            document.querySelector(this.getAttribute('href'))?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
         });
     });
 });
