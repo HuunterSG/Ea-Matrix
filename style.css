@@ -1,7 +1,16 @@
 /* Globals */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Roboto', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
-.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #000;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+.container {
+    max-width: 1200px;          /* o 1400px si querés más ancho */
+    margin: 0 auto;
+    padding: 0 2rem;            /* aire lateral en desktop y mobile */
+}
 .section { padding: 6rem 0; text-align: center; }
 h2 { font-family: 'Orbitron', sans-serif; font-size: 3rem; margin-bottom: 3rem; color: var(--accent); }
 
@@ -9,16 +18,28 @@ h2 { font-family: 'Orbitron', sans-serif; font-size: 3rem; margin-bottom: 3rem; 
 :root { --accent: #00d0ff; --gray: #1a1a1a; --text: #e0e0e0; }
 
 /* Header */
-.header { position: sticky; top: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); z-index: 100; transition: background 0.3s; }
-.header.scrolled { background: rgba(0,0,0,1); box-shadow: 0 4px 20px rgba(0,208,255,0.2); }
-.navbar {
+.header {
     position: sticky;
     top: 0;
-    background: rgba(0,0,0,0.92);
-    backdrop-filter: blur(15px);
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(10px);
     z-index: 1000;
-    border-bottom: 1px solid rgba(0,208,255,0.15);
+    border-bottom: 1px solid rgba(0,208,255,0.2);
 }
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 0;
+}
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;               /* espacio entre items */
+}
+.header.scrolled { background: rgba(0,0,0,1); box-shadow: 0 4px 20px rgba(0,208,255,0.2); }
+
 /* Logo principal - versión 100% funcional cross-browser 2026 */
 .logo h1 {
     font-family: 'Orbitron', sans-serif;
@@ -50,33 +71,28 @@ h2 { font-family: 'Orbitron', sans-serif; font-size: 3rem; margin-bottom: 3rem; 
 
 /* Hero */
 .hero {
-    height: 100vh;
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('TU-IMAGEN-HERO.jpg') center/cover no-repeat fixed;
+    min-height: 80vh;           /* no 100vh si el header tapa */
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    position: relative;
+    padding: 8rem 0 4rem;       /* aire arriba y abajo */
+    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('tu-imagen-hero.jpg') center/cover;
 }
-.hero-content h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 5rem;                  /* o el tamaño que uses */
-    font-weight: 700;
-    background-image: linear-gradient(90deg, #ffffff, #00d0ff);   /* blanco → cyan (tu vibe premium) */
-    background-clip: text;            /* estándar */
-    -webkit-background-clip: text;    /* necesario para Chrome/Safari */
-    color: transparent;               /* fallback + clave para que se vea el gradiente */
-    -webkit-text-fill-color: transparent;  /* refuerzo para WebKit */
-    text-shadow: 0 0 20px rgba(0, 208, 255, 0.5);  /* glow opcional para más impacto */
-    background-size: 200% 200%;       /* para animación si querés después */
-    /* Opcional: animación sutil */
-    animation: gradientFlow 8s linear infinite;
+
+.hero-content {
+    max-width: 900px;
+    padding: 0 1rem;
+}
+
+.hero h1 {
+    font-size: clamp(2.8rem, 8vw, 5.5rem); /* responsive automático */
+    margin-bottom: 1.5rem;
 }
 
 .hero p {
-    font-size: 1.6rem;
-    max-width: 800px;
-    margin: 0 auto 3rem;
+    font-size: 1.4rem;
+    margin-bottom: 3rem;
 }
 .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
 .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9)); }
@@ -91,20 +107,22 @@ h2 { font-family: 'Orbitron', sans-serif; font-size: 3rem; margin-bottom: 3rem; 
 .trust-badges { display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; font-size: 1.2rem; }
 
 /* Productos */
-.productos-grid, .productos-slider { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;                /* espacio entre cards! clave */
+    padding: 0 1rem;
+}
+
 .producto-card {
-    background: rgba(26,26,26,0.65);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(0,208,255,0.25);
+    padding: 1.8rem;
+    background: rgba(26,26,26,0.7);
     border-radius: 16px;
-    overflow: hidden;
-    transition: all 0.4s ease;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    transition: transform 0.3s;
 }
 
 .producto-card:hover {
-    transform: translateY(-15px) scale(1.03);
-    box-shadow: 0 20px 60px rgba(0,208,255,0.35);
+    transform: translateY(-12px);
 }
 .precio {
     color: #00d0ff;
@@ -126,4 +144,20 @@ h2 { font-family: 'Orbitron', sans-serif; font-size: 3rem; margin-bottom: 3rem; 
 .btn-primary:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,208,255,0.5); }
 
 /* Responsive */
-@media (max-width: 768px) { /* Ajustes para mobile */ }
+@media (max-width: 768px) { 
+    .nav-menu {
+        display: none;         /* oculta en mobile */
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(0,0,0,0.98);
+        padding: 2rem;
+        gap: 2rem;
+    }
+    .nav-menu.active { display: flex; }
+    .section { padding: 4rem 0; }
+    .hero { min-height: 60vh; padding: 6rem 0 3rem; }
+    .hero h1 { font-size: 3rem; }
+}
