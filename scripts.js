@@ -1,19 +1,20 @@
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
-
-// Cierra menú al clickear un link (buena práctica)
-document.querySelectorAll('.nav-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
+if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
     });
-});
 
+    // Cierra al clickear links
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        });
+    });
+}
 // Header scrolled
 window.addEventListener('scroll', () => {
     document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 50);
@@ -54,14 +55,61 @@ document.querySelectorAll('.add-to-cart').forEach(btn => {
 });
 updateCart();
 
-// Modal carrito
-const modal = document.getElementById('cart-modal');
-const cartLink = document.querySelector('.cart-icon a');
-const closeModal = document.querySelector('.close');
-cartLink.addEventListener('click', (e) => { e.preventDefault(); modal.style.display = 'block'; });
-closeModal.addEventListener('click', () => modal.style.display = 'none');
-window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+function updateCartBadge() {
+    const countElement = document.getElementById('cart-count');
+    const count = cart.length; // 'cart' es tu array de productos
+    countElement.textContent = count;
+    if (count > 0) {
+        countElement.style.display = 'flex';
+    } else {
+        countElement.style.display = 'none';
+    }
+}
 
+
+// Modal carrito - versión mejorada
+const modal = document.getElementById('cart-modal');
+if (!modal) {
+    console.warn('Modal con id "cart-modal" no encontrado');
+    return; // Salir temprano si no existe
+}
+
+const cartLink = document.querySelector('.cart-icon a');
+const closeBtn = document.querySelector('.close'); // Cambié a closeBtn para claridad
+
+// Abrir modal
+if (cartLink) {
+    cartLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // ← Evita scroll en body (buena práctica mobile)
+    });
+}
+
+// Cerrar con botón X
+if (closeBtn) {
+    closeBtn.addEventListener('click', () => closeModal());
+}
+
+// Cerrar click fuera (overlay)
+window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        closeModal();
+    }
+});
+
+// Función auxiliar para cerrar (reutilizable)
+function closeModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = ''; // ← Restaura scroll
+}
+
+// Opcional: cerrar con tecla ESC (mejora UX)
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.style.display === 'block') {
+        closeModal();
+    }
+});
 // Formulario contacto con EmailJS
 document.getElementById('contact-form').addEventListener('submit', (e) => {
     e.preventDefault();
