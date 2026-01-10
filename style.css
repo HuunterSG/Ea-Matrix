@@ -14,17 +14,15 @@ body {
     margin: 0 auto;
     padding: 0 1.8rem;
 }
-
 /* COLORES ROJO FUEGO 2026 */
 :root {
-    --accent: #ff0033;        /* Rojo neón principal */
+    --accent: #ff0033;
     --accent-dark: #cc0022;
     --accent-light: #ff1a4d;
     --glow: rgba(255, 0, 51, 0.6);
     --gray: #1a1a1a;
     --text: #f0f0f0;
 }
-
 /* ==================== HEADER & NAV ==================== */
 .header {
     position: sticky;
@@ -33,8 +31,8 @@ body {
     backdrop-filter: blur(12px);
     z-index: 1000;
     border-bottom: 1px solid rgba(255, 0, 51, 0.3);
-    transition: all 0.4s ease;
 }
+
 
 .header.scrolled {
     background: #000;
@@ -46,14 +44,10 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1.4rem 0;
-    flex-wrap: wrap; /* por si acaso en mobile */
+    flex-wrap: nowrap;
 }
-
 /* Logo con rojo neón */
-.logo {
-    flex: 0 0 auto;
-    text-align: left;
-}
+.logo { flex-shrink: 0; }
 
 .logo h1 {
     font-family: 'Orbitron', sans-serif;
@@ -75,12 +69,14 @@ body {
 }
 
 /* Menú desktop */
-.nav-menu {
-    flex: 1;
-    justify-content: center; /* centra los links en desktop */
-    text-align: center;
+.nav-menu { 
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+    margin: 0;
+    flex-grow: 1;
+    justify-content: center;
 }
-
 .nav-link {
     color: var(--text);
     text-decoration: none;
@@ -106,11 +102,10 @@ body {
 .nav-link:hover { color: var(--accent); }
 
 /* Carrito siempre visible */
-.cart-icon {
-    flex: 0 0 auto;
-    margin-left: auto; /* siempre a la derecha */
+.cart-icon { 
+    flex-shrink: 0;
+    margin-left: 2rem;
 }
-
 .cart-icon a {
     color: var(--accent);
     font-size: 1.9rem;
@@ -146,12 +141,11 @@ body {
 }
 
 /* Hamburguesa (solo mobile) */
-.hamburger {
+.hamburger { 
     display: none;
     cursor: pointer;
     flex-direction: column;
     gap: 7px;
-    padding: 8px;
     z-index: 1001;
 }
 
@@ -282,53 +276,38 @@ h2 {
 
 /* ==================== MEDIA QUERIES MOBILE (TODO FUNCIONA) ==================== */
 @media (max-width: 768px) {
-    .navbar {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .logo {
-        order: 1;
-    }
-    .hamburger {
-        order: 3;
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-    }
-    .cart-icon {
-        order: 2;
-        margin-left: 1rem;
-    }
     .nav-menu {
-        position: fixed !important;
-        top: 0;
-        right: -100%;
+        display: none !important;
+        position: fixed;
+        inset: 0 0 0 auto;
         width: 85%;
         max-width: 340px;
         height: 100vh;
-        background: rgba(0, 0, 0, 0.98);
+        background: rgba(0,0,0,0.98);
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        position: fixed !important;
-        inset: 0 0 0 auto !important;
-        transform: translateX(100%) !important;
-        transition: transform 0.45s ease !important;
+        transition: transform 0.45s ease;
+        transform: translateX(100%);
         z-index: 999;
         padding: 5rem 2rem;
-        display: none !important;
     }
 
     .nav-menu.active {
-        right: 0;
-        transform: translateX(0) !important;
-        visibility: visible !important;
+        transform: translateX(0);
         display: flex !important;
     }
 
-    .hero { padding: 8rem 0 4rem; }
+    .hamburger {
+        display: flex !important;
+    }
+
+    .navbar {
+        flex-wrap: nowrap;
+    }
+    .hero { padding: 8rem 0 4rem; min-height: 70vh; }
     .hero h1 { font-size: 3.2rem; }
+    
     .section { padding: 4rem 0; }
 }
 

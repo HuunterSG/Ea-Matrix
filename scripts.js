@@ -1,10 +1,11 @@
+JavaScript// ==================== MENÚ HAMBURGUESA ====================
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
 if (hamburger && navMenu) {
-    console.log('Hamburger y navMenu encontrados → JS OK');
+    console.log('Menú encontrado - JS OK');
     hamburger.addEventListener('click', () => {
-        console.log('Click en hamburguesa detectado');
+        console.log('Click hamburguesa');
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
     });
@@ -16,38 +17,25 @@ if (hamburger && navMenu) {
         });
     });
 } else {
-    console.error('Hamburger o navMenu NO encontrados → revisa HTML');
+    console.error('Hamburger o nav-menu NO encontrados');
 }
-// Header scrolled
+
+// ==================== HEADER SCROLLED ====================
 window.addEventListener('scroll', () => {
-    document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 50);
+    document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 50);
 });
 
-// Slider productos (simple con touch)
-let slideIndex = 0;
-const slider = document.querySelector('.productos-slider');
-const slides = slider.querySelectorAll('.producto-card');
-const totalSlides = slides.length;
-function showSlide(index) {
-    slider.style.transform = `translateX(-${index * 100 / 3}%)`; // Muestra 3 por slide
-}
-document.querySelector('.prev').addEventListener('click', () => { slideIndex = (slideIndex - 1 + totalSlides) % totalSlides; showSlide(slideIndex); });
-document.querySelector('.next').addEventListener('click', () => { slideIndex = (slideIndex + 1) % totalSlides; showSlide(slideIndex); });
-
-// Carrito global
+// ==================== CARRITO ====================
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-// Función única que actualiza TODO
 function updateCart() {
-    // Actualiza badge (siempre visible, oculta si 0)
-    const countElement = document.getElementById('cart-count');
-    if (countElement) {
+    const countEl = document.getElementById('cart-count');
+    if (countEl) {
         const count = cart.length;
-        countElement.textContent = count;
-        countElement.style.display = count > 0 ? 'flex' : 'none';
+        countEl.textContent = count;
+        countEl.style.display = count > 0 ? 'flex' : 'none';
     }
 
-    // Actualiza lista en modal
     const itemsList = document.getElementById('cart-items');
     if (itemsList) {
         itemsList.innerHTML = cart.map(item => `
@@ -58,42 +46,44 @@ function updateCart() {
         `).join('');
     }
 
-    // Calcula y muestra total
-    const totalElement = document.getElementById('cart-total');
-    if (totalElement) {
+    const totalEl = document.getElementById('cart-total');
+    if (totalEl) {
         const total = cart.reduce((sum, item) => sum + item.price, 0);
-        totalElement.textContent = total.toLocaleString(); // formato bonito ARS
+        totalEl.textContent = total.toLocaleString('es-AR');
     }
 
-    // Guarda en localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// Evento agregar al carrito
+// Agregar producto
 document.querySelectorAll('.add-to-cart').forEach(btn => {
     btn.addEventListener('click', () => {
-        const card = btn.closest('.producto-card'); // mejor que parentElement
+        const card = btn.closest('.producto-card');
         if (!card) return;
 
         const id = card.dataset.id;
-        const name = card.dataset.name;
-        const price = parseInt(card.dataset.price);
+        const name = card.dataset.name || card.querySelector('h3')?.textContent.trim();
+        const priceStr = card.dataset.price || card.querySelector('.precio')?.textContent.replace('$', '').replace('.', '').trim();
+        const price = parseInt(priceStr) || 0;
 
-        // Verifica si ya existe (evita duplicados)
-        const existing = cart.find(item => item.id === id);
-        if (existing) {
-            alert('Este producto ya está en el carrito');
+        if (!id || !name || !price) {
+            alert('Error: datos del producto incompletos');
+            return;
+        }
+
+        if (cart.some(item => item.id === id)) {
+            alert('Ya está en el carrito');
             return;
         }
 
         cart.push({ id, name, price });
         updateCart();
-        alert('¡Agregado al carrito!');
+        alert('¡Agregado!');
     });
 });
 
-// Evento remover item (opcional pero útil)
-document.addEventListener('click', (e) => {
+// Remover (opcional)
+document.addEventListener('click', e => {
     if (e.target.classList.contains('remove-item')) {
         const id = e.target.dataset.id;
         cart = cart.filter(item => item.id !== id);
@@ -101,18 +91,35 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Cargar al inicio
-updateCart(); // ← Esto es clave, llama al cargar la página
+// Inicializar carrito
+updateCart();
 
-// Modal carrito - versión mejorada
+// ==================== MODAL CARRITO ====================
 const modal = document.getElementById('cart-modal');
-if (!modal) {
-    console.warn('Modal con id "cart-modal" no encontrado');
-    return; // Salir temprano si no existe
+const cartToggle = document.getElementById('cart-toggle');
+const closeBtn = document.querySelector('.modal .close');
+
+if (cartToggle) {
+    cartToggle.addEventListener('click', e => {
+        e.preventDefault();
+        if (modal) modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    });
 }
 
-const cartLink = document.querySelector('.cart-icon a');
-const closeBtn = document.querySelector('.close'); // Cambié a closeBtn para claridad
+if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+        if (modal) modal.style.display = 'none';
+        document.body.style.overflow = '';
+    });
+}
+
+window.addEventListener('click', e => {
+    if (e.target === modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+});
 
 // Abrir modal
 if (cartLink) {
