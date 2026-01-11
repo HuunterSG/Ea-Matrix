@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
     const menuCloseBtn = document.querySelector('.menu-close-btn');
-
+    
     if (hamburger && navMenu) {
         // Toggle con hamburguesa
         hamburger.addEventListener('click', () => {
@@ -24,6 +24,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
             });
+        });
+        if (menuCloseBtn) {
+            menuCloseBtn.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            });
+        }
+        hamburger.addEventListener('click', () => {
+            if (hamburger.classList.contains('active')) {
+                document.body.classList.add('menu-open');
+            } else {
+                document.body.classList.remove('menu-open');
+            }
         });
     }
     // Carrito avanzado con animaciones y persistencia
