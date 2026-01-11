@@ -1,15 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Menú hamburguesa con animación suave y cierre inteligente
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
+    const menuCloseBtn = document.querySelector('.menu-close-btn');
 
     if (hamburger && navMenu) {
+        // Toggle con hamburguesa
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
 
-        // Cierra menú al clickear links o fuera
+        // Cierre con botón X interno
+        if (menuCloseBtn) {
+            menuCloseBtn.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        }
+
+        // Cierre al clickear links
         navMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -17,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-
     // Carrito avanzado con animaciones y persistencia
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
