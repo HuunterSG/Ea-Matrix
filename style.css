@@ -13,18 +13,24 @@ body { font-family: 'Roboto', sans-serif; background: #000; color: #fff; line-he
 .header {
     position: sticky;
     top: 0;
-    width: 100%;
+    left: 0;
+    width: 100%;                /* 100% del viewport */
     background: rgba(0,0,0,0.95);
     backdrop-filter: blur(12px);
     z-index: 1000;
     border-bottom: 1px solid var(--accent-dark);
+    margin: 0;
+    padding: 0;
 }
-
 .navbar {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.2rem 1.5rem;     /* aire interno equilibrado */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.2rem 0;
+    flex-wrap: nowrap;
 }
 
 .logo h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; margin: 0; }
@@ -86,8 +92,20 @@ body { font-family: 'Roboto', sans-serif; background: #000; color: #fff; line-he
 
 /* Mobile */
 @media (max-width: 768px) {
-    .hamburger { display: flex; }
-
+    .hamburger { display: flex; padding: 0.5rem;}
+    .logo h1 {
+        font-size: 2rem;        /* un poco más pequeño en mobile */
+    }
+    /* Centrado general de todo el contenido (hero, secciones, footer) */
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.2rem;          /* aire lateral equilibrado en desktop */
+    }
+    .cart-icon a {
+        font-size: 1.6rem;
+    }
     .nav-menu {
         visibility: hidden;
         opacity: 0;
@@ -273,3 +291,32 @@ h2 {
 
 .instagram-link { color: var(--accent); font-size: 1.4rem; text-decoration: none; transition: all 0.3s; }
 .instagram-link:hover { color: #fff; text-shadow: 0 0 15px var(--glow); }
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    /* Forzamos centrado en grids y flex */
+    .productos-grid,
+    .productos-slider {
+        justify-content: center;
+        justify-items: center;
+        padding: 0 0.5rem;
+    }
+
+    .producto-card {
+        max-width: 95%;
+        margin: 0 auto;
+    }
+
+    .hero-content {
+        padding: 0 0.8rem;
+    }
+
+    .trust-badges {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+}
