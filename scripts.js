@@ -1,46 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Menú hamburguesa
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
     const menuCloseBtn = document.querySelector('.menu-close-btn');
-    
+
     if (hamburger && navMenu) {
-        // Toggle con hamburguesa
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
+            document.body.classList.toggle('menu-open', hamburger.classList.contains('active'));
         });
 
-        // Cierre con botón X interno
         if (menuCloseBtn) {
             menuCloseBtn.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
+                document.body.classList.remove('menu-open');
             });
         }
 
-        // Cierre al clickear links
         navMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
-            });
-        });
-        if (menuCloseBtn) {
-            menuCloseBtn.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
                 document.body.classList.remove('menu-open');
             });
-        }
-        hamburger.addEventListener('click', () => {
-            if (hamburger.classList.contains('active')) {
-                document.body.classList.add('menu-open');
-            } else {
-                document.body.classList.remove('menu-open');
-            }
         });
     }
-    // Carrito avanzado con animaciones y persistencia
+
+    // Carrito
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     function updateCart() {
@@ -49,16 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const count = cart.length;
             countEl.textContent = count;
             countEl.style.display = count > 0 ? 'flex' : 'none';
-            if (count > 0) countEl.classList.add('pulse');
-            setTimeout(() => countEl.classList.remove('pulse'), 600);
         }
 
         const itemsList = document.getElementById('cart-items');
         if (itemsList) {
             itemsList.innerHTML = cart.map(item => `
-                <li class="cart-item">
-                    <span>${item.name}</span>
-                    <span>$${item.price.toLocaleString()}</span>
+                <li>
+                    ${item.name} - $${item.price}
                     <button class="remove-item" data-id="${item.id}">×</button>
                 </li>
             `).join('');
@@ -79,21 +64,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!card) return;
 
             const id = card.dataset.id;
-            const name = card.dataset.name || card.querySelector('h3')?.textContent.trim();
-            const price = parseInt(card.dataset.price) || 0;
-
-            if (!id || !name || !price) return;
+            const name = card.dataset.name;
+            const price = parseInt(card.dataset.price);
 
             if (cart.some(item => item.id === id)) {
-                alert('Este producto ya está en tu carrito');
+                alert('Ya está en el carrito');
                 return;
             }
 
             cart.push({ id, name, price });
             updateCart();
-            btn.style.transform = 'scale(0.95)';
-            setTimeout(() => btn.style.transform = 'scale(1)', 100);
-            alert('¡Producto agregado!');
+            alert('¡Agregado!');
         });
     });
 
@@ -107,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateCart();
 
-    // Modal carrito con fade
+    // Modal carrito
     const modal = document.getElementById('cart-modal');
     const cartToggle = document.getElementById('cart-toggle');
     const closeBtn = document.querySelector('.close');
@@ -141,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Newsletter popup con fade
+    // Newsletter popup
     const popup = document.getElementById('newsletter-popup');
     if (popup) {
         setTimeout(() => {
@@ -157,19 +138,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('newsletter-form')?.addEventListener('submit', e => {
         e.preventDefault();
-        alert('¡Suscrito con éxito!');
+        alert('¡Suscrito!');
         popup.classList.remove('active');
         setTimeout(() => popup.style.display = 'none', 400);
     });
 
-    // Smooth scroll elegante
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+        anchor.addEventListener('click', e => {
             e.preventDefault();
-            document.querySelector(this.getAttribute('href'))?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+            document.querySelector(anchor.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
         });
     });
 });

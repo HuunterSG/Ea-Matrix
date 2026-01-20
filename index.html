@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="EA Matrix: Productos premium 3D para detailing y cuidado de autos. Calidad que marca la diferencia. Envíos a todo Argentina.">
-    <title>EA Matrix | Detailing Premium</title>
+    <title>EA Matrix | Detailing Premium - Calidad que Marca la Diferencia</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
@@ -12,6 +12,7 @@
 </head>
 <body>
 
+    <!-- Header -->
     <header class="header">
         <nav class="navbar container">
             <div class="logo">
@@ -23,6 +24,7 @@
                 <li><a href="#best-sellers">Best Sellers</a></li>
                 <li><a href="#about">Nosotros</a></li>
                 <li><a href="#contacto">Contacto</a></li>
+                <button class="menu-close-btn">Cerrar</button>
             </ul>
             <div class="cart-icon">
                 <a href="#" id="cart-toggle">
@@ -38,9 +40,11 @@
         </nav>
     </header>
 
+    <!-- Hero -->
     <section id="home" class="hero">
         <video autoplay muted loop playsinline class="hero-video">
             <source src="https://assets.mixkit.co/videos/preview/mixkit-car-detailing-4k-12345-small.mp4" type="video/mp4">
+            Tu navegador no soporta video.
         </video>
         <div class="hero-overlay"></div>
         <div class="hero-content container">
@@ -48,7 +52,7 @@
             <p>Productos 3D premium para detailing y cuidado automotriz. Envíos nacionales desde Mar del Plata.</p>
             <div class="hero-buttons">
                 <a href="#productos" class="btn-primary">Explorar Productos</a>
-                <a href="https://wa.me/+54XXXXXXXXXX?text=Hola%20EA%20Matrix" target="_blank" class="btn-secondary">
+                <a href="https://wa.me/+54TU_NUMERO?text=Hola%20EA%20Matrix" target="_blank" class="btn-secondary">
                     <i class="fab fa-whatsapp"></i> Consultar Ahora
                 </a>
             </div>
@@ -60,6 +64,7 @@
         </div>
     </section>
 
+    <!-- Best Sellers -->
     <section id="best-sellers" class="section container">
         <h2>Best Sellers</h2>
         <div class="productos-grid">
@@ -70,10 +75,11 @@
                 <span class="precio">$25.000</span>
                 <button class="add-to-cart btn-primary">Agregar al Carrito</button>
             </div>
-            <!-- Agrega más cards -->
+            <!-- Agrega más -->
         </div>
     </section>
 
+    <!-- Productos -->
     <section id="productos" class="section container">
         <h2>Nuestros Productos Premium</h2>
         <div class="productos-grid">
@@ -88,6 +94,7 @@
         </div>
     </section>
 
+    <!-- Contacto -->
     <section id="contacto" class="section container contact-section">
         <h2>Contacto</h2>
         <form id="contact-form" class="contact-form">
@@ -98,16 +105,18 @@
         </form>
     </section>
 
+    <!-- Carrito modal -->
     <div id="cart-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Tu Carrito</h2>
             <ul id="cart-items"></ul>
             <p>Total: $<span id="cart-total">0</span></p>
-            <a href="https://wa.me/+54XXXXXXXXXX?text=Mi%20pedido:..." target="_blank" class="btn-primary">Finalizar por WhatsApp</a>
+            <a href="https://wa.me/+54TU_NUMERO?text=Mi%20pedido:..." target="_blank" class="btn-primary">Finalizar por WhatsApp</a>
         </div>
     </div>
 
+    <!-- Newsletter popup -->
     <div id="newsletter-popup" class="popup">
         <div class="popup-content">
             <span class="close-popup">&times;</span>
@@ -120,6 +129,7 @@
         </div>
     </div>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <p>© 2026 EA Matrix - Mar del Plata, Argentina</p>
@@ -129,7 +139,7 @@
         </div>
     </footer>
 
-    <script src="scripts.js"></script>
-    <script>emailjs.init("TU_USER_ID");</script>
+    <script src="script.js"></script>
+    <script>emailjs.init("TU_USER_ID_DE_EMAILJS");</script>
 </body>
 </html>
