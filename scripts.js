@@ -175,7 +175,7 @@ document.querySelectorAll('.nav-menu a').forEach(link => {
     // ========================================
     document.getElementById('checkout-btn')?.addEventListener('click', async () => {
         try {
-            const response = await fetch('https://tu-backend.vercel.app/create-preference', {
+            const response = await fetch('http://localhost:3000/create-preference', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ items: cart })
