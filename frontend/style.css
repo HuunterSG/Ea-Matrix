@@ -1,0 +1,99 @@
+/* ================ GLOBALES ================ */
+/* Configuración base para eliminar márgenes y asegurar consistencia en todos los navegadores */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Estilos generales del body para fuente, color y fondo */
+body { font-family: 'Roboto', sans-serif; background: #000; color: #fff; line-height: 1.6; overflow-x: hidden; }
+
+/* Contenedor principal para centrado y aire lateral */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* Variables de colores (rojo modificado para mejor contraste) */
+:root {
+    --accent: #ff0033; /* Rojo principal vibrante */
+    --accent-light: #ff4d6a; /* Rojo claro para hover */
+    --accent-dark: #99001f; /* Rojo oscuro para sombras */
+    --glow: rgba(255, 0, 51, 0.6); /* Efecto glow rojo */
+}
+
+/* ================ HEADER ================ */
+/* Header fijo en top, con blur y borde rojo oscuro */
+.header { position: sticky; top: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid var(--accent-dark); }
+
+/* Navbar: flex para logo, menú, carrito y hamburguesa */
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 0; }
+
+/* Logo con gradiente rojo */
+.logo h1 { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; margin: 0; background: linear-gradient(90deg, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+/* Menú desktop con gap */
+.nav-menu { display: flex; list-style: none; gap: 2rem; }
+
+/* Links del menú con transition rojo claro al hover */
+.nav-link { color: #fff; text-decoration: none; font-weight: 500; transition: color 0.3s; }
+.nav-link:hover { color: var(--accent-light); }
+
+/* Dropdown para productos (desplegable al hover, como en 3D) */
+.dropdown { position: relative; }
+.dropdown-menu { position: absolute; top: 100%; left: 0; background: rgba(0,0,0,0.9); display: none; list-style: none; padding: 1rem; border-radius: 10px; box-shadow: 0 5px 15px var(--glow); }
+.dropdown:hover .dropdown-menu { display: block; }
+
+/* Carrito con badge rojo */
+.cart-icon a { color: var(--accent); font-size: 1.8rem; position: relative; }
+.cart-badge { position: absolute; top: -10px; right: -10px; background: var(--accent); color: #000; font-size: 0.8rem; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px var(--glow); }
+
+/* Hamburguesa para mobile */
+.hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+.bar { width: 30px; height: 4px; background: var(--accent); }
+
+/* Mobile adjustments for header and menú */
+@media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .nav-menu { position: fixed; top: 0; right: -100%; width: 80%; height: 100vh; background: rgba(0,0,0,0.98); flex-direction: column; gap: 2rem; justify-content: center; align-items: center; transition: right 0.4s; }
+    .nav-menu.active { right: 0; }
+}
+
+/* Hero section with video and overlay */
+.hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+.hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
+.hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.5)); }
+.hero-content { position: relative; z-index: 1; max-width: 800px; }
+.hero h1 { font-family: 'Orbitron', sans-serif; font-size: 4.5rem; margin-bottom: 1rem; color: var(--accent); text-shadow: 0 0 20px var(--glow); }
+.hero p { font-size: 1.2rem; margin-bottom: 2rem; }
+
+.hero-buttons { display: flex; gap: 1rem; justify-content: center; }
+
+.btn-primary, .btn-secondary { padding: 1rem 2rem; border-radius: 30px; transition: 0.3s; }
+
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-light); }
+
+.btn-secondary { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
+.btn-secondary:hover { background: var(--accent); color: #fff; }
+
+.trust-badges { display: flex; gap: 2rem; justify-content: center; font-size: 1rem; }
+
+/* Secciones generales */
+.section { padding: 4rem 0; }
+
+h2 { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; text-align: center; margin-bottom: 2rem; color: var(--accent); text-shadow: 0 0 15px var(--glow); }
+
+.productos-grid, .categorias-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+
+.producto-card, .categoria-card { background: rgba(26,26,26,0.8); padding: 1rem; border-radius: 10px; text-align: center; transition: 0.3s; }
+.producto-card:hover, .categoria-card:hover { transform: translateY(-10px); box-shadow: 0 0 20px var(--glow); }
+
+.precio { color: var(--accent); font-weight: bold; }
+
+/* Contacto */
+.contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+/* Modal y Popup */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
+
+.modal-content { background: #111; padding: 2rem; border-radius: 10px; max-width: 500px; }
+
+/* Footer */
+.footer { background: #111; padding: 2rem; text-align: center; }
+
+.instagram-link { color: var(--accent); text-decoration: none; }

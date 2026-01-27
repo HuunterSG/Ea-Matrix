@@ -1,16 +1,22 @@
+// script.js - Frontend completo de EA Matrix
+// Todo se ejecuta después de que el DOM esté cargado
 document.addEventListener('DOMContentLoaded', () => {
-    // Menú hamburguesa
+    // ========================================
+    // MENÚ HAMBURGUESA (mobile) - Animación X + botón cerrar
+    // ========================================
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
     const menuCloseBtn = document.querySelector('.menu-close-btn');
 
     if (hamburger && navMenu) {
+        // Toggle menú al clickear hamburguesa
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
             document.body.classList.toggle('menu-open', hamburger.classList.contains('active'));
         });
 
+        // Cerrar menú con botón "Cerrar" interno
         if (menuCloseBtn) {
             menuCloseBtn.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -19,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // Cerrar menú al clickear cualquier link
         navMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -28,9 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Carrito
+    // ========================================
+    // CARRITO - Persistencia con localStorage
+    // ========================================
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+    // Función que actualiza badge, lista del modal y total
     function updateCart() {
         const countEl = document.getElementById('cart-count');
         if (countEl) {
@@ -43,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (itemsList) {
             itemsList.innerHTML = cart.map(item => `
                 <li>
-                    ${item.name} - $${item.price}
+                    ${item.name} - $${item.price.toLocaleString('es-AR')}
                     <button class="remove-item" data-id="${item.id}">×</button>
                 </li>
             `).join('');
@@ -52,32 +62,40 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalEl = document.getElementById('cart-total');
         if (totalEl) {
             const total = cart.reduce((sum, item) => sum + item.price, 0);
-            totalEl.textContent = total.toLocaleString();
+            totalEl.textContent = total.toLocaleString('es-AR');
         }
 
         localStorage.setItem('cart', JSON.stringify(cart));
     }
 
+    // Agregar producto al carrito
     document.querySelectorAll('.add-to-cart').forEach(btn => {
         btn.addEventListener('click', () => {
             const card = btn.closest('.producto-card');
             if (!card) return;
 
             const id = card.dataset.id;
-            const name = card.dataset.name;
-            const price = parseInt(card.dataset.price);
+            const name = card.dataset.name || card.querySelector('h3')?.textContent.trim();
+            const price = parseInt(card.dataset.price) || 0;
 
+            if (!id || !name || !price) {
+                alert('Error: datos del producto incompletos');
+                return;
+            }
+
+            // Evitar duplicados
             if (cart.some(item => item.id === id)) {
-                alert('Ya está en el carrito');
+                alert('Este producto ya está en el carrito');
                 return;
             }
 
             cart.push({ id, name, price });
             updateCart();
-            alert('¡Agregado!');
+            alert('¡Producto agregado al carrito!');
         });
     });
 
+    // Remover producto del carrito
     document.addEventListener('click', e => {
         if (e.target.classList.contains('remove-item')) {
             const id = e.target.dataset.id;
@@ -86,9 +104,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Inicializar carrito al cargar
     updateCart();
 
-    // Modal carrito
+    // ========================================
+    // MODAL CARRITO - Responsive con fade
+    // ========================================
     const modal = document.getElementById('cart-modal');
     const cartToggle = document.getElementById('cart-toggle');
     const closeBtn = document.querySelector('.close');
@@ -122,7 +143,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Newsletter popup
+    // ========================================
+    // CHECKOUT MERCADO PAGO
+    // ========================================
+    document.getElementById('checkout-btn')?.addEventListener('click', async () => {
+        try {
+            const response = await fetch('https://tu-backend.vercel.app/create-preference', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ items: cart })
+            });
+
+            if (!response.ok) throw new Error('Error en el servidor');
+            const { id } = await response.json();
+
+            const mp = new MercadoPago('TU_PUBLIC_KEY'); // Reemplaza con tu PUBLIC_KEY
+            mp.checkout({
+                preference: { id },
+                autoOpen: true
+            });
+        } catch (error) {
+            alert('Error al iniciar el pago. Intenta de nuevo.');
+            console.error(error);
+        }
+    });
+
+    // ========================================
+    // POPUP NEWSLETTER - Aparece después de 5s con fade
+    // ========================================
     const popup = document.getElementById('newsletter-popup');
     if (popup) {
         setTimeout(() => {
@@ -138,16 +186,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('newsletter-form')?.addEventListener('submit', e => {
         e.preventDefault();
-        alert('¡Suscrito!');
+        alert('¡Suscrito con éxito!');
         popup.classList.remove('active');
         setTimeout(() => popup.style.display = 'none', 400);
     });
 
-    // Smooth scroll
+    // ========================================
+    // SMOOTH SCROLL - Para todos los links internos
+    // ========================================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', e => {
             e.preventDefault();
-            document.querySelector(anchor.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+            document.querySelector(anchor.getAttribute('href'))?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
         });
+    });
+
+    // ========================================
+    // FORMULARIO CONTACTO - EmailJS
+    // ========================================
+    document.getElementById('contact-form')?.addEventListener('submit', e => {
+        e.preventDefault();
+        emailjs.send('TU_SERVICE_ID', 'TU_TEMPLATE_ID', {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            message: document.getElementById('message').value
+        }).then(() => {
+            alert('¡Mensaje enviado! Te contactaremos pronto.');
+            e.target.reset();
+        }).catch(() => alert('Error al enviar mensaje.'));
     });
 });
