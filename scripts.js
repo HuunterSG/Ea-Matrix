@@ -184,7 +184,7 @@ document.querySelectorAll('.nav-menu a').forEach(link => {
             if (!response.ok) throw new Error('Error en el servidor');
             const { id } = await response.json();
 
-            const mp = new MercadoPago('TU_PUBLIC_KEY'); // Reemplaza con tu PUBLIC_KEY
+            const mp = new MercadoPago(TU_PUBLIC_KEY); // Reemplaza con tu PUBLIC_KEY
             mp.checkout({
                 preference: { id },
                 autoOpen: true
