@@ -1,6 +1,33 @@
 // script.js - Frontend completo de EA Matrix
 // Todo se ejecuta después de que el DOM esté cargado
 document.addEventListener('DOMContentLoaded', () => {
+
+// Función para cargar páginas dentro del index
+async function loadPage(page) {
+    const mainContent = document.getElementById('main-content');
+    try {
+        const response = await fetch(page);
+        const html = await response.text();
+        // Extraemos solo lo que está dentro de las etiquetas body o section si es necesario
+        mainContent.innerHTML = html; 
+    } catch (error) {
+        mainContent.innerHTML = "<h2>Error al cargar la sección</h2>";
+    }
+}
+
+// Cargar Home por defecto
+loadPage('home.html');
+
+// Escuchar los clics del menú para que no recarguen la página
+document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', (e) => {
+        const page = link.getAttribute('href');
+        if(page.endsWith('.html')) {
+            e.preventDefault(); // Evita que el navegador salte a otra página
+            loadPage(page);
+        }
+    });
+});
     // ========================================
     // MENÚ HAMBURGUESA (mobile) - Animación X + botón cerrar
     // ========================================
